@@ -1,0 +1,231 @@
+global class createMemberInbound implements Messaging.InboundEmailHandler 
+{
+    global Messaging.InboundEmailResult handleInboundEmail(Messaging.inboundEmail email, Messaging.InboundEnvelope env) 
+    {  
+     Messaging.InboundEmailResult result = new Messaging.InboundEmailResult();  
+           
+           
+           System.debug(email.plaintextBody+' BODY  BODY  BODY  BODY  BODY' );
+      if(email.plaintextBody.contains('<http://www.99acres.com/>') || email.plaintextBody.contains('<http://www.magicbricks.com/>') )  {
+         
+        String myPlainText= '';             
+        myPlainText = email.plaintextBody ;         
+        List<Lead__C> memb = new List<Lead__C>();  
+               
+               string ttFname;
+               String ttMOB;
+               string ttEM;
+                string Fname ;
+                string mob ;
+                string email1;
+                string ph;
+                String Remarks;
+                integer i ;   
+        
+                  
+        try 
+        {
+            List<Lead__C> Pre_lead = [SELECT Id, Name, Email__c FROM Lead__C WHERE Email__c = :email.fromAddress ];          
+            system.debug('@@@@@@@@@@@'+ Pre_Lead);
+            
+            
+        //    if(Pre_lead.size()==0)
+        //    {                 
+                String test=myPlainText ;
+                       system.debug('@@@@@@@@@@@'+ test);
+               // set<string> a=new Set<string>{'Name','Email','Phone number', 'Property details'};
+               // boolean check=false;        
+                List<String> lsttest=test.split(' ');        
+             
+                     system.debug('#####################'+ lsttest);
+           
+           if(Email.plainTextBody.contains('<http://www.99acres.com/>') ){
+           
+                system.debug('<http://www.99acres.com/>');
+                
+                
+             For( i=0;i <lsttest.size();i++)
+                {
+                
+                  system.debug('<http://www.99acre99999999999s.com/>');
+                system.debug('NAmeeeee'+lsttest[i]);
+                    if( lsttest[i]=='Name')
+                    { 
+                    /*                 
+                        system.debug('NNNNNNNNNNNNNN'+lsttest[i+1]);
+                        Fname =lsttest[i+2];
+                        Fname =Fname.remove('*');
+                        Fname =Fname.remove('Dealer');
+                        Fname =Fname.remove('()');
+               
+                        system.debug('4444444444444444444'+Fname );
+                        system.debug('aaaaaaaaaaaaa'+lsttest[i+2]);
+                        system.debug('mmmmmmmmmmmmmmmm'+lsttest[i+3]);
+                        system.debug('eeeeeeeeeeeeeee'+lsttest[i+4]);
+                        system.debug('ssssssss'+lsttest[i+5]);
+                                
+                         
+                           email1 = lsttest[i+6];
+                           email1 = email1.remove('*');
+                            
+                                
+                        system.debug('rrrrrrrrrrrrrrrr'+lsttest[i+6]);
+                        
+                           system.debug('rrrrrrrrrrrrrrrr'+email1 );
+                        
+                        
+                        system.debug('uuuuuuuuuuuuuuuu'+lsttest[i+7]);
+                        system.debug('tttttttttttt'+lsttest[i+8]);
+                        system.debug('hhhhhhhhhhhhhhhhhhh'+lsttest[i+9]);
+                       
+                            ph = lsttest[i+11];
+                            ph = ph.remove('*');
+                         
+                        system.debug('vvvvvvvvvvvvvvv'+lsttest[i+11]);  
+                         system.debug('vvvvvvvvvvvvvvv'+ ph );  
+                   */
+                   
+                      
+                     ttFname = test.substringBetween('Name :','Email :');
+                         
+                         ttFname = ttFname.remove('*');
+                        
+                  ttMOB = test.substringBetween('Phone number : *','*');
+                  ttEM = test.substringBetween('Email :','Phone number :');  
+                     
+                         ttEM = ttEM.remove('*');
+                        
+                  Remarks = test.substringBetween('details :' , 'Response type :');
+                  
+                    System.debug('%%%%%%%%%%%%%%%%%%%%%%%%%%%%'+Remarks);
+                     System.debug('%%%%%%%%%%%%%%%%%%%%%%%%%%%%'+ttFname );
+                      System.debug('%%%%%%%%%%%%%%%%%%%%%%%%%%%%'+ttMOB );
+                       System.debug('%%%%%%%%%%%%%%%%%%%%%%%%%%%%'+ ttEM  );   
+                      
+                      
+                      
+                        
+                     
+                  
+                   } 
+              
+                  
+             
+             }
+             }
+              // END OF http:// www.99acres.com
+            
+              string s = 'Sender\'s Name';
+              
+                system.debug('sssssssssssssssssssssssss'+s);
+                  //BEGINING OF MAGIC BRICKS <http://www.magicbricks.com/>
+                  
+                   if(Email.plainTextBody.contains('<http://www.magicbricks.com/>') ){
+                    
+                      system.debug('<http://www.magicbricks.com/>');
+                   
+             For( i=0;i <lsttest.size();i++)
+                {
+                 system.debug('<http://www.magicbrickkkkkkkkkkkkkkks.com/>');
+                system.debug('NAmeeeee'+lsttest[i] +i);
+                    if( lsttest[i]=='Sender\'s')
+                    {                  
+                /*
+                        system.debug('NNNNNNNNNNNNNN'+lsttest[i+1] +i);
+                        Fname =lsttest[i+2];
+                       // Fname =Fname.remove('*');
+                       // Fname =Fname.remove('Dealer');
+                       // Fname =Fname.remove('()');
+               
+                        system.debug('4444444444444444444'+Fname );
+                        system.debug('aaaaaaaaaaaaa'+lsttest[i+2]);
+                        system.debug('mmmmmmmmmmmmmmmm'+lsttest[i+3]);
+                        system.debug('eeeeeeeeeeeeeee'+lsttest[i+4]);
+                        system.debug('ssssssss'+lsttest[i+5]);
+                                
+                          ph = lsttest[i+4];
+                            ph = ph.remove('Email:');
+                            
+                         
+                         
+                           email1 = lsttest[i+5];
+                           email1 = email1.remove('*');
+                            
+                                
+                        system.debug('rrrrrrrrrrrrrrrr'+lsttest[i+6]);
+                        
+                           system.debug('rrrrrrrrrrrrrrrr'+email1 );
+                        
+                        
+                        system.debug('uuuuuuuuuuuuuuuu'+lsttest[i+7]);
+                        system.debug('tttttttttttt'+lsttest[i+8]);
+                        system.debug('hhhhhhhhhhhhhhhhhhh'+lsttest[i+9]);
+                       
+                       //     ph = lsttest[i+11];
+                       //     ph = ph.remove('*');
+                         
+                        system.debug('vvvvvvvvvvvvvvv'+lsttest[i+11]);  
+                         system.debug('vvvvvvvvvvvvvvv'+ ph );  
+                 */       
+                     /*   system.debug('vvvvvvvvvvvvvvv'+lsttest[i+12]);  
+                        system.debug('vvvvvvvvvvvvvvv'+lsttest[i+13]);  
+                        system.debug('vvvvvvvvvvvvvvv'+lsttest[i+14]);  
+                        system.debug('vvvvvvvvvvvvvvv'+lsttest[i+15]);  
+                        system.debug('vvvvvvvvvvvvvvv'+lsttest[i+16]);  
+                        system.debug('vvvvvvvvvvvvvvv'+lsttest[i+17]);  
+                        
+                       */ 
+                  ttFname = test.substringBetween('Sender\'s Name:','Mobile:');
+                  ttMOB = test.substringBetween('Mobile:','Email:');
+                  ttEM = test.substringBetween('Email:','Message:');     
+                  Remarks = test.substringBetween('Message:','Click here');
+                  
+                    System.debug('%%%%%%%%%%%%%%%%%%%%%%%%%%%%'+Remarks);
+                     System.debug('%%%%%%%%%%%%%%%%%%%%%%%%%%%%'+ttFname );
+                      System.debug('%%%%%%%%%%%%%%%%%%%%%%%%%%%%'+ttMOB );
+                       System.debug('%%%%%%%%%%%%%%%%%%%%%%%%%%%%'+ ttEM  );
+                       
+                  
+                  
+                  
+                  
+                   } 
+              
+             }
+             }
+                  // END OF MAGIC BRICKS
+            
+            
+              system.debug('Fname Fname Fname '+Fname );
+              system.debug('email1email1email1 '+email1);
+              system.debug('ph ph ph ph ph  '+ph );
+            
+            
+              Lead__C mem = new Lead__C(Name = ttFname
+                    , Email__C = ttEM  ,Mobile__c = ttMOB ,
+                    Additional_Note__c = Remarks ); 
+                    
+                    System.debug('22222222222 ' + mem );  
+                    memb.add(mem);    
+                   
+                   insert memb;
+             
+                
+               
+         //   }
+            
+           
+            
+            
+        }            
+        catch (Exception e) 
+        {
+            System.debug('Error is: ' + e);
+        }         
+        result.success = true;         
+        
+    }
+   return result;
+    }
+    
+}
